@@ -56,14 +56,14 @@
 
     <div class="container">
         <h2>Add a Todo</h2>
-        <form>
+        <form action="/", method="POST">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" aria-describedby="emailHelp" />
+                <input type="text" class="form-control" id="title" aria-describedby="emailHelp" name="title"/>
             </div>
             <div class="form-group">
                 <label for="desc">Description</label>
-                <input type="text" class="form-control" id="desc"/>
+                <input type="text" class="form-control" id="desc" name="desc"/>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -75,35 +75,27 @@
             <thead>
                 <tr>
                     <th scope="col">SNo</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Created On:</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                {% for item in showtodo %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.desc }}</td>
+                        <td>{{ item.created }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
+                <!-- Optional JavaScript -->
+                <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+                
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
