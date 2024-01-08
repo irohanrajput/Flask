@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -21,20 +21,20 @@ class Todo(db.Model):
 @app.route("/", methods = ['GET', 'POST'])
 def hello_world():
     if request.method == 'POST':
-        title = request.form['title']
-        desc = request.form['desc']
+        title = request.form.get('title')
+        desc = request.form.get('desc')
         if title and desc is not None:
             todo = Todo(title = title, desc = desc)
-            db.session.add(todo)
-            db.session.commit()
+            db.session.add(todo)   # or Todo.add(todo)
+            db.session.commit()    # or Todo.commit()  
     showtodo = Todo.query.all()
     return render_template("index.html", showtodo = showtodo)
 
-# @app.route("/show")
-# def show():
-#     allTodo = Todo.query.all()
-#     print(allTodo)
-#     return 
+@app.route("/clear", methods = ['POST'])
+def clear_all():
+    db.session.query(Todo).delete()
+    db.session.commit()
+    return redirect(url_for('hello_world'))
 
 
 if __name__ == "__main__":
